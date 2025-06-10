@@ -1,0 +1,6 @@
+﻿services:
+  funcionario.auth.api:
+    image: funcionario.auth.api
+    build:
+      context: .
+      dockerfile: Auth.API/Dockerfile
