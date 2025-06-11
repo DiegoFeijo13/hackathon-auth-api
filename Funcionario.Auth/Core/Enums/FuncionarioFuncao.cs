@@ -1,4 +1,4 @@
-namespace Auth.API.Model;
+namespace Core.Enums;
 
 public enum FuncionarioFuncao
 {
