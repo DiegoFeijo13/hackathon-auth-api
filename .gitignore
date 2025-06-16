@@ -53,3 +53,7 @@ CodeCoverage/
 TestResult.xml
 nunit-*.xml
 /.idea/
+/.vs/
+/Funcionario.Auth/.vs
+/Funcionario.Auth/API/API.csproj.user
+/Funcionario.Auth/API/appsettings.Development.json
