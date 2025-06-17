@@ -10,9 +10,9 @@ namespace API.Controllers;
 public class FuncionarioController(ISender sender) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> CriarFuncionarioAsync([FromBody] FuncionarioEntity funcionario)
+    public async Task<IActionResult> CriarFuncionarioAsync([FromBody] CriarFuncionarioCommand funcionario)
     {
-        var result = await sender.Send(new CriarFuncionarioCommand(funcionario));
+        var result = await sender.Send(funcionario);
         return Created("", result);
     }
     

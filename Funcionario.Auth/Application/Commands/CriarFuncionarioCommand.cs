@@ -1,5 +1,6 @@
 ﻿using Application.Events;
 using Application.Validators;
+using Core.Enums;
 using Core.Interfaces;
 using Domain.Entities;
 using FluentValidation;
@@ -7,7 +8,7 @@ using MediatR;
 
 namespace Application.Commands;
 
-public record CriarFuncionarioCommand(FuncionarioEntity Funcionario) : IRequest<FuncionarioEntity>;
+public record CriarFuncionarioCommand(string nome, string email, string senha, FuncionarioFuncao funcao) : IRequest<FuncionarioEntity>;
 
 public class CriarFuncionarioCommandHandler(IFuncionarioRepository funcionarioRepository, IPublisher mediator)
     : IRequestHandler<CriarFuncionarioCommand, FuncionarioEntity>
@@ -15,10 +16,18 @@ public class CriarFuncionarioCommandHandler(IFuncionarioRepository funcionarioRe
     public async Task<FuncionarioEntity> Handle(CriarFuncionarioCommand request, CancellationToken cancellationToken)
     {
         Validate(request);
+
+        var funcionario = new FuncionarioEntity
+        {
+            Nome = request.nome,
+            Email = request.email,
+            Senha = request.senha,
+            Funcao = request.funcao
+        };
         
-        var funcionario = await funcionarioRepository.CriarFuncionarioAsync(request.Funcionario);
-        await mediator.Publish(new FuncionarioCriadoEvent(funcionario.Id), cancellationToken);
-        return funcionario;
+        var result = await funcionarioRepository.CriarFuncionarioAsync(funcionario);
+        await mediator.Publish(new FuncionarioCriadoEvent(result.Id), cancellationToken);
+        return result;
     }
 
     private static void Validate(CriarFuncionarioCommand request)

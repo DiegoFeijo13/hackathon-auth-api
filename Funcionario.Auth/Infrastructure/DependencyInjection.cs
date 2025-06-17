@@ -2,6 +2,7 @@ using Core.Interfaces;
 using Core.Options;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -17,7 +18,9 @@ public static class DependencyInjection
             options.UseNpgsql(provider.GetRequiredService<IOptionsSnapshot<ConnectionStringOptions>>().Value.DefaultConnection);
         });
 
-        services.AddScoped<IFuncionarioRepository, FuncionarioRepository>();        
+        services.AddScoped<IFuncionarioRepository, FuncionarioRepository>();       
+        
+        services.AddSingleton<ITokenService, TokenService>();
 
         return services;
     }
