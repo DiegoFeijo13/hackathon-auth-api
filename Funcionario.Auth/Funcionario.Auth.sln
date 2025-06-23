@@ -7,7 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{49D14E74-42AD-4BAF-A6C0-85F7D0BE50DD}"
 	ProjectSection(SolutionItems) = preProject
-		compose.yaml = compose.yaml
+		Dockerfile = Dockerfile
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{3417C5AE-3376-4DF5-B721-694B02C39FCE}"
