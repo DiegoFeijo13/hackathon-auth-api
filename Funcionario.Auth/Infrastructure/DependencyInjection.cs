@@ -19,7 +19,8 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IFuncionarioRepository, FuncionarioRepository>();       
-        
+        services.AddScoped<IClienteRepository, ClienteRepository>();
+
         services.AddSingleton<ITokenService, TokenService>();
 
         return services;

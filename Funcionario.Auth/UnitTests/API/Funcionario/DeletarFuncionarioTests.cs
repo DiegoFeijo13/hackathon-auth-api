@@ -1,8 +1,5 @@
 ﻿using API.Controllers;
 using Application.Commands;
-using Core.Enums;
-using Domain.Entities;
-using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -25,7 +22,7 @@ public class DeletarFuncionarioTests
         var id = Guid.NewGuid();
 
         _senderMock
-            .Setup(m => m.Send(It.IsAny<DeletarFuncionarioCommand>(), It.IsAny<CancellationToken>()))
+            .Setup(m => m.Send(It.IsAny<DeleteFuncionarioCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
 
         var result = await _sut.DeletarFuncionarioAsync(id);
@@ -40,7 +37,7 @@ public class DeletarFuncionarioTests
         var id = Guid.NewGuid();
 
         _senderMock
-            .Setup(m => m.Send(It.IsAny<DeletarFuncionarioCommand>(), It.IsAny<CancellationToken>()))
+            .Setup(m => m.Send(It.IsAny<DeleteFuncionarioCommand>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new KeyNotFoundException());
 
         var result = await _sut.DeletarFuncionarioAsync(id);

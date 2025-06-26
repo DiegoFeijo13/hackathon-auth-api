@@ -3,15 +3,15 @@ using Core.Interfaces;
 using Moq;
 
 namespace UnitTests.Application.Funcionario;
-public class DeletarFuncionarioCommandHandlerTests
+public class DeleteFuncionarioCommandHandlerTests
 {
     private readonly Mock<IFuncionarioRepository> _repositoryMock;    
-    private readonly DeletarFuncionarioCommandHandler _sut;
+    private readonly DeleteFuncionarioCommandHandler _sut;
 
-    public DeletarFuncionarioCommandHandlerTests()
+    public DeleteFuncionarioCommandHandlerTests()
     {
         _repositoryMock = new Mock<IFuncionarioRepository>();        
-        _sut = new DeletarFuncionarioCommandHandler(_repositoryMock.Object);
+        _sut = new DeleteFuncionarioCommandHandler(_repositoryMock.Object);
     }
 
     [Fact]
@@ -23,7 +23,7 @@ public class DeletarFuncionarioCommandHandlerTests
             .Setup(x => x.DeletarFuncionarioAsync(It.IsAny<Guid>()))
             .ReturnsAsync(true);
 
-        var result = await _sut.Handle(new DeletarFuncionarioCommand(id), CancellationToken.None);
+        var result = await _sut.Handle(new DeleteFuncionarioCommand(id), CancellationToken.None);
 
         _repositoryMock.Verify(x => x.DeletarFuncionarioAsync(It.IsAny<Guid>()), Times.Once);
         
@@ -39,7 +39,7 @@ public class DeletarFuncionarioCommandHandlerTests
             .Setup(x => x.DeletarFuncionarioAsync(It.IsAny<Guid>()))
             .ReturnsAsync(false);
 
-        var result = await _sut.Handle(new DeletarFuncionarioCommand(id), CancellationToken.None);
+        var result = await _sut.Handle(new DeleteFuncionarioCommand(id), CancellationToken.None);
 
         _repositoryMock.Verify(x => x.DeletarFuncionarioAsync(It.IsAny<Guid>()), Times.Once);
 

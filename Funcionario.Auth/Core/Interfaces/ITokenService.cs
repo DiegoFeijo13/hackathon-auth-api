@@ -1,7 +1,8 @@
-﻿using Domain.Entities;
+﻿using Core.Entities;
 
 namespace Core.Interfaces;
 public interface ITokenService
 {
-    string GetToken(FuncionarioEntity funcionario);
+    string GetFuncionarioToken(FuncionarioEntity funcionario);
+    string GetClienteToken(ClienteEntity cliente);
 }
