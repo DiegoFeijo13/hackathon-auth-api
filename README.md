@@ -1,2 +1,2 @@
-# hackathon-funcionario-api
-API para CRUD de funcionários. Hackathon FIAP F5
+# hackathon-auth-api
+API para CRUD e autenticação de funcionários e clientes. Hackathon FIAP F5
