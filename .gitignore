@@ -54,6 +54,7 @@ TestResult.xml
 nunit-*.xml
 /.idea/
 /.vs/
-/Funcionario.Auth/.vs
-/Funcionario.Auth/API/API.csproj.user
-/Funcionario.Auth/API/appsettings.Development.json
+/Auth.Api/.vs
+/Auth.Api/API/API.csproj.user
+/Auth.Api/API/appsettings.Development.json
+/Auth.Api/Infrastructure/Migrations
