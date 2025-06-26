@@ -1,32 +1,32 @@
 ﻿using Application.Queries;
+using Core.Entities;
 using Core.Interfaces;
-using Domain.Entities;
 using Moq;
 
 namespace UnitTests.Application.Token;
-public class ListarTokenQueryTests
+public class GetClienteTokenQueryTests
 {
-    private readonly Mock<IFuncionarioRepository> _repositoryMock;
+    private readonly Mock<IClienteRepository> _repositoryMock;
     private readonly Mock<ITokenService> _tokenServiceMock;
-    private readonly ListarTokenQueryHandler _sut;
+    private readonly GetClienteTokenQueryHandler _sut;
 
-    public ListarTokenQueryTests()
+    public GetClienteTokenQueryTests()
     {
-        _repositoryMock = new Mock<IFuncionarioRepository>();
+        _repositoryMock = new Mock<IClienteRepository>();
         _tokenServiceMock = new Mock<ITokenService>();
-        _sut = new ListarTokenQueryHandler(_repositoryMock.Object, _tokenServiceMock.Object);
+        _sut = new GetClienteTokenQueryHandler(_repositoryMock.Object, _tokenServiceMock.Object);
     }
 
     [Fact]
     public async Task Handle_InformadoDadosValidos_DeverRetornarToken()
     {
-        var query = new ListarTokenQuery("user", "password");
+        var query = new GetClienteTokenQuery("00000000000", "password");
         var expectedToken = "generatedToken";
         
 
         _repositoryMock.Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(new FuncionarioEntity());
-        _tokenServiceMock.Setup(x => x.GetToken(It.IsAny<FuncionarioEntity>()))
+            .ReturnsAsync(new ClienteEntity());
+        _tokenServiceMock.Setup(x => x.GetClienteToken(It.IsAny<ClienteEntity>()))
             .Returns(expectedToken);
 
         var result = await _sut.Handle(query, CancellationToken.None);
@@ -37,15 +37,15 @@ public class ListarTokenQueryTests
     [Fact]
     public async Task Handle_InformadoDadosInvalidos_DeverRetornarStringVazio()
     {
-        var query = new ListarTokenQuery("user", "password");
+        var query = new GetClienteTokenQuery("", "");
         var expectedToken = string.Empty;
 
         _repositoryMock.Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(default(FuncionarioEntity));
+            .ReturnsAsync(default(ClienteEntity));
 
         var result = await _sut.Handle(query, CancellationToken.None);
 
-        _tokenServiceMock.Verify(x => x.GetToken(It.IsAny<FuncionarioEntity>()), Times.Never);
+        _tokenServiceMock.Verify(x => x.GetClienteToken(It.IsAny<ClienteEntity>()), Times.Never);
 
         Assert.Equal(expectedToken, result);
     }

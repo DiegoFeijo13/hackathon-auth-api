@@ -1,7 +1,7 @@
 ﻿using API.Controllers;
 using Application.Commands;
+using Core.Entities;
 using Core.Enums;
-using Domain.Entities;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -30,10 +30,10 @@ public class CriarFuncionarioTests
             Senha = "senha",
             Funcao = FuncionarioFuncao.Atendente
         };
-        var command = new CriarFuncionarioCommand(funcionario.Nome, funcionario.Email, funcionario.Senha, funcionario.Funcao);
+        var command = new AddFuncionarioCommand(funcionario.Nome, funcionario.Email, funcionario.Senha, funcionario.Funcao);
 
         _senderMock
-            .Setup(m => m.Send(It.IsAny<CriarFuncionarioCommand>(), It.IsAny<CancellationToken>()))
+            .Setup(m => m.Send(It.IsAny<AddFuncionarioCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(funcionario);
 
         var result = await _sut.CriarFuncionarioAsync(command);
@@ -45,10 +45,10 @@ public class CriarFuncionarioTests
     [Fact]
     public async Task CriarFuncionarioAsync_InformadoDadosInvalidos_DeveRetornarBadRequest()
     {        
-        var command = new CriarFuncionarioCommand("", "", "", FuncionarioFuncao.Atendente);        
+        var command = new AddFuncionarioCommand("", "", "", FuncionarioFuncao.Atendente);        
 
         _senderMock
-            .Setup(m => m.Send(It.IsAny<CriarFuncionarioCommand>(), It.IsAny<CancellationToken>()))
+            .Setup(m => m.Send(It.IsAny<AddFuncionarioCommand>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new ValidationException(""));
 
         var result = await _sut.CriarFuncionarioAsync(command);

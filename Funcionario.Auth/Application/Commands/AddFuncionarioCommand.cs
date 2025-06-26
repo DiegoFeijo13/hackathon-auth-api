@@ -1,19 +1,19 @@
 ﻿using Application.Events;
 using Application.Validators;
+using Core.Entities;
 using Core.Enums;
 using Core.Interfaces;
-using Domain.Entities;
 using FluentValidation;
 using MediatR;
 
 namespace Application.Commands;
 
-public record CriarFuncionarioCommand(string nome, string email, string senha, FuncionarioFuncao funcao) : IRequest<FuncionarioEntity>;
+public record AddFuncionarioCommand(string nome, string email, string senha, FuncionarioFuncao funcao) : IRequest<FuncionarioEntity>;
 
-public class CriarFuncionarioCommandHandler(IFuncionarioRepository funcionarioRepository, IPublisher mediator)
-    : IRequestHandler<CriarFuncionarioCommand, FuncionarioEntity>
+public class AddFuncionarioCommandHandler(IFuncionarioRepository funcionarioRepository, IPublisher mediator)
+    : IRequestHandler<AddFuncionarioCommand, FuncionarioEntity>
 {
-    public async Task<FuncionarioEntity> Handle(CriarFuncionarioCommand request, CancellationToken cancellationToken)
+    public async Task<FuncionarioEntity> Handle(AddFuncionarioCommand request, CancellationToken cancellationToken)
     {
         Validate(request);
 
@@ -30,7 +30,7 @@ public class CriarFuncionarioCommandHandler(IFuncionarioRepository funcionarioRe
         return result;
     }
 
-    private static void Validate(CriarFuncionarioCommand request)
+    private static void Validate(AddFuncionarioCommand request)
     {
         var validator = new ModelFuncionarioValidator();
         var result = validator.Validate(request);
